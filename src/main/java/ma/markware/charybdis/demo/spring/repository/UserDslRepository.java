@@ -25,7 +25,7 @@ public class UserDslRepository {
     Instant now = Instant.now();
     return dslQuery.insertInto(User_Table.user, User_Table.name, User_Table.role, User_Table.accessLogs, User_Table.creationDate,
                                User_Table.lastUpdatedDate)
-                   .values(username, RoleEnum.DEFAULT, Map.of(now, userAgent), now, nowuse)
+                   .values(username, RoleEnum.DEFAULT, Map.of(now, userAgent), now, now)
                    .ifNotExists()
                    .execute();
   }
