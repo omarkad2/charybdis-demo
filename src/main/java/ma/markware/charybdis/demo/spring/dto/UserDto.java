@@ -1,56 +1,30 @@
 package ma.markware.charybdis.demo.spring.dto;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-import ma.markware.charybdis.demo.spring.domain.Address;
-import ma.markware.charybdis.demo.spring.domain.RoleEnum;
+import java.util.UUID;
 
 public class UserDto {
 
-  private String name;
-  private List<Address> addresses;
-  private RoleEnum role;
-  private Map<Instant, String> accessLogs;
-  private AddressDto address;
+  private UUID userId;
+  private String username;
 
-  public String getName() {
-    return name;
+  public UUID getUserId() {
+    return userId;
   }
 
-  public void setName(final String name) {
-    this.name = name;
+  public void setUserId(final UUID userId) {
+    this.userId = userId;
   }
 
-  public List<Address> getAddresses() {
-    return addresses;
+  public String getUsername() {
+    return username;
   }
 
-  public void setAddresses(final List<Address> addresses) {
-    this.addresses = addresses;
+  public void setUsername(final String username) {
+    this.username = username;
   }
 
-  public RoleEnum getRole() {
-    return role;
-  }
-
-  public void setRole(final RoleEnum role) {
-    this.role = role;
-  }
-
-  public Map<Instant, String> getAccessLogs() {
-    return accessLogs;
-  }
-
-  public void setAccessLogs(final Map<Instant, String> accessLogs) {
-    this.accessLogs = accessLogs;
-  }
-
-  public AddressDto getAddress() {
-    return address;
-  }
-
-  public void setAddress(final AddressDto address) {
-    this.address = address;
+  @Override
+  public String toString() {
+    return "UserDto{" + "userId=" + userId + ", username='" + username + '\'' + '}';
   }
 }

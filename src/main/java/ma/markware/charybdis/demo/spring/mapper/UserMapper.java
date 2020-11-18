@@ -2,13 +2,15 @@ package ma.markware.charybdis.demo.spring.mapper;
 
 import ma.markware.charybdis.demo.spring.domain.User;
 import ma.markware.charybdis.demo.spring.dto.UserDto;
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface UserMapper {
+@Component
+public class UserMapper {
 
-  User toSource(UserDto userDto);
-
-  UserDto toDto(User user);
+  public UserDto map(User user) {
+    UserDto userDto = new UserDto();
+    userDto.setUserId(user.getUserId());
+    userDto.setUsername(user.getUsername());
+    return userDto;
+  }
 }
-

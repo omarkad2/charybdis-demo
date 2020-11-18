@@ -1,0 +1,7 @@
+CREATE KEYSPACE IF NOT EXISTS "charybdis_demo" WITH REPLICATION={'class' : 'SimpleStrategy', 'replication_factor' : 1};
+CREATE TABLE IF NOT EXISTS "charybdis_demo"."message"("creation_date" timestamp,"last_updated_date" timestamp,"messageid" uuid,"chatroomid" uuid,"authorid" uuid,"content" text,"sendingdate" timestamp,PRIMARY KEY("messageid"));
+CREATE TABLE IF NOT EXISTS "charybdis_demo"."message_by_chatroom"("creation_date" timestamp,"last_updated_date" timestamp,"messageid" uuid,"chatroomid" uuid,"authorid" uuid,"content" text,"sendingdate" timestamp,PRIMARY KEY("chatroomid"));
+CREATE TABLE IF NOT EXISTS "charybdis_demo"."chatroom_by_code"("creation_date" timestamp,"last_updated_date" timestamp,"chatroomid" uuid,"chatroomcode" int,"creatorid" uuid,"userids" set<uuid>,"single" boolean,PRIMARY KEY("chatroomcode"));
+CREATE TABLE IF NOT EXISTS "charybdis_demo"."chatroom"("creation_date" timestamp,"last_updated_date" timestamp,"chatroomid" uuid,"chatroomcode" int,"creatorid" uuid,"userids" set<uuid>,"single" boolean,PRIMARY KEY("chatroomid"));
+CREATE TABLE IF NOT EXISTS "charybdis_demo"."user"("userid" uuid,"username" text,"creation_date" timestamp,"last_updated_date" timestamp,PRIMARY KEY("userid"));
+CREATE INDEX IF NOT EXISTS user_username_idx ON "charybdis_demo"."user"("username");

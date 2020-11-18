@@ -1,70 +1,47 @@
 package ma.markware.charybdis.demo.spring.domain;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
+import static ma.markware.charybdis.demo.spring.domain.Defaultkeyspace.DEFAULT_KEYSPACE;
+
+import java.util.UUID;
 import ma.markware.charybdis.model.annotation.Column;
-import ma.markware.charybdis.model.annotation.Frozen;
+import ma.markware.charybdis.model.annotation.GeneratedValue;
 import ma.markware.charybdis.model.annotation.Index;
 import ma.markware.charybdis.model.annotation.PartitionKey;
 import ma.markware.charybdis.model.annotation.Table;
 
-@Table(keyspace = "keyspace_demo", name = "user")
+@Table(keyspace = DEFAULT_KEYSPACE, name = "user")
 public class User extends AuditableEntity {
 
   @Column
   @PartitionKey
-  private String name;
+  @GeneratedValue
+  private UUID userId;
 
   @Column
-  private List<@Frozen Address> addresses;
+  @Index // Secondary index (less performant than a true denormalization)
+  private String username;
 
-  @Column
-  @Index(name = "access_role") // Generates a secondary index on this column
-  private RoleEnum role;
-
-  @Column(name = "access_logs")
-  private Map<Instant, String> accessLogs;
-
+  // Used by charybdis
   public User() {
   }
 
-  public User(final String name, final List<Address> addresses, final RoleEnum role, final Map<Instant, String> accessLogs) {
-    this.name = name;
-    this.addresses = addresses;
-    this.role = role;
-    this.accessLogs = accessLogs;
+  public User(final String username) {
+    this.username = username;
   }
 
-  public String getName() {
-    return name;
+  public UUID getUserId() {
+    return userId;
   }
 
-  public void setName(final String name) {
-    this.name = name;
+  public void setUserId(final UUID userId) {
+    this.userId = userId;
   }
 
-  public List<Address> getAddresses() {
-    return addresses;
+  public String getUsername() {
+    return username;
   }
 
-  public void setAddresses(final List<Address> addresses) {
-    this.addresses = addresses;
-  }
-
-  public RoleEnum getRole() {
-    return role;
-  }
-
-  public void setRole(final RoleEnum role) {
-    this.role = role;
-  }
-
-  public Map<Instant, String> getAccessLogs() {
-    return accessLogs;
-  }
-
-  public void setAccessLogs(final Map<Instant, String> accessLogs) {
-    this.accessLogs = accessLogs;
+  public void setUsername(final String username) {
+    this.username = username;
   }
 }
