@@ -1,2 +1,4 @@
-# charybdis-spring-boot-example
-Demo Charybdis framework in a spring boot application
+# charybdis-demo
+
+Spring boot application using Charybdis framework
+
