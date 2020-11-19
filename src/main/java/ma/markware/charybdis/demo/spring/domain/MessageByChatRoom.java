@@ -8,19 +8,14 @@ import ma.markware.charybdis.model.annotation.PartitionKey;
 import ma.markware.charybdis.model.annotation.Table;
 
 @Table(keyspace = DEFAULT_KEYSPACE, name = "message_by_chatroom")
-public class MessageByChatRoom extends AbstractMessage {
+public class MessageByChatRoom extends Message {
 
+  // Used by charybdis
   public MessageByChatRoom() {
   }
 
-  public MessageByChatRoom(final AbstractMessage message) {
+  public MessageByChatRoom(final Message message) {
     super(message);
-  }
-
-  @Override
-  @Column
-  public UUID getMessageId() {
-    return messageId;
   }
 
   @Override

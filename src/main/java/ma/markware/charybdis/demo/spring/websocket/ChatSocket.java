@@ -31,7 +31,7 @@ public class ChatSocket extends TextWebSocketHandler {
   @Override
   public void handleTextMessage(WebSocketSession session, TextMessage message) {
     UserDto userDto = resolveUser(session);
-    log.info("Received message {} from {}", message, userDto);
+    log.debug("Received message {} from {}", message, userDto);
     if (StringUtils.isNotBlank(message.getPayload())) {
       WebsocketMessage websocketMessage = MessageEncoderDecoder.decodeTextMessage(message);
       Payload payload = websocketMessage.getPayload();
@@ -44,7 +44,7 @@ public class ChatSocket extends TextWebSocketHandler {
   @Override
   public void afterConnectionEstablished(WebSocketSession session) {
     UserDto userDto = resolveUser(session);
-    log.info("Opened session for {}", userDto);
+    log.debug("Opened session for {}", userDto);
     chatService.addSession(userDto.getUserId(), session);
     chatService.broadcastConnectedUsers();
   }
@@ -52,7 +52,7 @@ public class ChatSocket extends TextWebSocketHandler {
   @Override
   public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
     UserDto userDto = resolveUser(session);
-    log.info("Closed session for {}", userDto);
+    log.debug("Closed session for {}", userDto);
     chatService.removeSession(userDto.getUserId(), session);
     chatService.broadcastConnectedUsers();
   }
@@ -64,7 +64,7 @@ public class ChatSocket extends TextWebSocketHandler {
       user = userService.getUserById(uuid); // throws error if user not found
       session.getAttributes().put("user", user);
     }
-    log.info("Resolved user: {}", user);
+    log.debug("Resolved user: {}", user);
     return user;
   }
 

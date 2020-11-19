@@ -3,7 +3,6 @@ package ma.markware.charybdis.demo.spring.repository;
 import java.util.UUID;
 import ma.markware.charybdis.CqlTemplate;
 import ma.markware.charybdis.batch.Batch;
-import ma.markware.charybdis.demo.spring.domain.AbstractMessage;
 import ma.markware.charybdis.demo.spring.domain.Message;
 import ma.markware.charybdis.demo.spring.domain.MessageByChatRoom;
 import ma.markware.charybdis.demo.spring.domain.MessageByChatRoom_Table;
@@ -21,9 +20,9 @@ public class MessageRepository {
     this.cqlTemplate = cqlTemplate;
   }
 
-  public void create(AbstractMessage message) {
+  public void create(Message message) {
     Batch batch = cqlTemplate.batch().logged();
-    cqlTemplate.crud(batch).create(Message_Table.message, new Message(message));
+    cqlTemplate.crud(batch).create(Message_Table.message, message);
     cqlTemplate.crud(batch).create(MessageByChatRoom_Table.message_by_chatroom, new MessageByChatRoom(message));
     batch.execute();
   }

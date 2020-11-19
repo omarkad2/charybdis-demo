@@ -9,6 +9,7 @@ public class ChatMessagePayload implements Payload {
   private UUID messageId;
   private UUID chatRoomId;
   private UUID authorId;
+  private String authorUsername;
   private String content;
   private Instant sendingDate;
 
@@ -37,6 +38,14 @@ public class ChatMessagePayload implements Payload {
 
   public void setAuthorId(final UUID authorId) {
     this.authorId = authorId;
+  }
+
+  public String getAuthorUsername() {
+    return authorUsername;
+  }
+
+  public void setAuthorUsername(final String authorUsername) {
+    this.authorUsername = authorUsername;
   }
 
   public String getContent() {

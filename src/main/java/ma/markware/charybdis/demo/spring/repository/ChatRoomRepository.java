@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.UUID;
 import ma.markware.charybdis.CqlTemplate;
 import ma.markware.charybdis.batch.Batch;
-import ma.markware.charybdis.demo.spring.domain.AbstractChatRoom;
 import ma.markware.charybdis.demo.spring.domain.ChatRoom;
 import ma.markware.charybdis.demo.spring.domain.ChatRoomByCode;
 import ma.markware.charybdis.demo.spring.domain.ChatRoomByCode_Table;
@@ -20,9 +19,9 @@ public class ChatRoomRepository {
     this.cqlTemplate = cqlTemplate;
   }
 
-  public void create(AbstractChatRoom chatRoom) {
+  public void create(ChatRoom chatRoom) {
     Batch batch = cqlTemplate.batch().logged();
-    cqlTemplate.crud(batch).create(ChatRoom_Table.chatroom, new ChatRoom(chatRoom));
+    cqlTemplate.crud(batch).create(ChatRoom_Table.chatroom, chatRoom);
     cqlTemplate.crud(batch).create(ChatRoomByCode_Table.chatroom_by_code, new ChatRoomByCode(chatRoom));
     batch.execute();
   }

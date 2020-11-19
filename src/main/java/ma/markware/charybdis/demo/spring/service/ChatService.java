@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import ma.markware.charybdis.demo.spring.domain.AbstractMessage;
+import ma.markware.charybdis.demo.spring.domain.Message;
 import ma.markware.charybdis.demo.spring.dto.UserDto;
 import ma.markware.charybdis.demo.spring.mapper.MessageMapper;
 import ma.markware.charybdis.demo.spring.repository.ChatRoomRepository;
@@ -65,7 +65,7 @@ public class ChatService {
   }
 
   public void relayMessage(UUID authorId, ChatMessagePayload chatMessage) {
-    AbstractMessage message = messageMapper.map(chatMessage);
+    Message message = messageMapper.map(chatMessage);
     message.setSendingDate(Instant.now());
     // Get chatRoom
     chatRoomRepository.findChatRoomById(message.getChatRoomId())

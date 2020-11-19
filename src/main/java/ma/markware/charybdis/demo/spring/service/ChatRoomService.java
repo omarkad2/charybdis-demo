@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import ma.markware.charybdis.demo.spring.domain.AbstractChatRoom;
+import ma.markware.charybdis.demo.spring.domain.ChatRoom;
 import ma.markware.charybdis.demo.spring.domain.ChatRoomByCode;
 import ma.markware.charybdis.demo.spring.domain.MessageByChatRoom;
 import ma.markware.charybdis.demo.spring.dto.Page;
@@ -33,10 +33,10 @@ public class ChatRoomService {
     this.messageMapper = messageMapper;
   }
 
-  public Page<ChatMessagePayload> getMessagesInChatRoom(final UUID chatRoomId, final int limit, final String pagingState) {
+  public Page<ChatMessagePayload> getMessagesInChatRoom(final UUID chatRoomId, final Integer limit, final String pagingState) {
     Page<ChatMessagePayload> result = new Page<>();
     PageRequest pageRequest = null;
-    if (StringUtils.isNotBlank(pagingState)) {
+    if (limit != null && StringUtils.isNotBlank(pagingState)) {
       pageRequest = PageRequest.of(ByteBuffer.wrap(pagingState.getBytes(StandardCharsets.UTF_8)), limit);
     }
     PageResult<MessageByChatRoom> pageResult = messageRepository.getMessagesByChatRoomPaged(chatRoomId, pageRequest);
@@ -54,7 +54,7 @@ public class ChatRoomService {
     if(chatRoom.isPresent()) {
       return chatRoom.get().getChatRoomId();
     }
-    AbstractChatRoom newChatRoom = new AbstractChatRoom(chatRoomCode, senderId,Set.of(senderId, receiverId), true);
+    ChatRoom newChatRoom = new ChatRoom(chatRoomCode, senderId, Set.of(senderId, receiverId), true);
     chatRoomRepository.create(newChatRoom);
     return newChatRoom.getChatRoomId();
   }

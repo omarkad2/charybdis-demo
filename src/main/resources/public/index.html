@@ -1,0 +1,67 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="#" />
+        <title>Charybdis Demo Application</title>
+    </head>
+    <body>
+        <div class="modal show-modal" id="modal">
+            <div class="modal-content">
+                <form id="username-form" action="javascript:void(0);">
+                    <label for="username">Please enter your username:</label>
+                    <input type="text" id="username" name="username">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div id="app"></div>
+
+        <script>
+            
+            window.addEventListener('DOMContentLoaded', function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                const form = document.getElementById('username-form');
+                form.addEventListener('submit', (event) => {
+                    const username = document.getElementById('username').value;
+
+                    if (!!username && username.length > 0) {
+                        var currentUser = new Charybdis.User();
+                        var options = {
+                            method: 'GET',
+                            headers: new Headers(),
+                            mode: 'cors',
+                            cache: 'default'
+                        };
+                        fetch('http://localhost:8080/api/user/v1/' + username, options)
+                        .then(response => {
+                            response.json().then(data => {
+                                currentUser.setUserId(data.userId);
+                                currentUser.setUsername(data.username);
+
+                                // hide modal
+                                const modalElt = document.getElementById('modal');
+                                var modal = document.querySelector(".modal");
+                                modalElt.classList.remove("show-modal");
+
+                                // create instance of a plugin
+                                var elem = document.getElementById('app');
+
+                                var session = new Charybdis.Session(elem, 'localhost:8080', currentUser);
+                                // initialize
+                                session.init();
+                                // [Test purposes] ChatBox will eventually become an internal class, instanciated by the user listing or conversation history
+                                let sideBar = new Charybdis.SideBar(elem, session);
+                                // initialize
+                                sideBar.render();
+                            });
+                        })
+                        .catch(err => alert('Error when fetching user: ', err));
+                    }
+                }, false);
+            }, false);
+        </script>
+    <script type="text/javascript" src="./index.js"></script></body>
+</html>
