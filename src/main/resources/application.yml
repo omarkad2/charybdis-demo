@@ -1,5 +1,0 @@
-#Datastax config
-datastax-java-driver.basic:
-  request.timeout: 10 minutes
-  contact-points.0: 127.0.0.1:9042
-  load-balancing-policy.local-datacenter: datacenter1

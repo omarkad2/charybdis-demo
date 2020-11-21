@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  # Start cassandra and expose 9042
+  charybdis-demo-cassandra:
+    container_name: charybdis-demo-cassandra
+    image: cassandra:latest
+    command: [-f]
+    ports:
+      - "9042:9042"
+
+  # Start the app on port 8080
+  charybdis-demo-app:
+    container_name: charybdis-demo-app
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - charybdis-demo-cassandra
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    restart: always
