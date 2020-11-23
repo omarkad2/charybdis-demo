@@ -3,10 +3,9 @@ version: '3'
 services:
 
   # Start cassandra and expose 9042
-  charybdis-demo-cassandra:
-    container_name: charybdis-demo-cassandra
-    image: cassandra:latest
-    command: [-f]
+  charybdis-demo-scylla:
+    container_name: charybdis-demo-scylla
+    image: scylladb/scylla:latest
     ports:
       - "9042:9042"
 
@@ -17,7 +16,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - charybdis-demo-cassandra
+      - charybdis-demo-scylla
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     restart: always
